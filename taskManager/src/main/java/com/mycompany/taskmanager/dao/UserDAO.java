@@ -1,13 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.taskmanager.dao;
 
-/**
- *
- * @author HENRIQUEMICHEL
- */
+import com.mycompany.taskmanager.database.ConnectionSQL;
+import com.mycompany.taskmanager.model.User;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import org.mindrot.jbcrypt.BCrypt;
+
 public class UserDAO {
-    
+
+    public static void createUser(User user) {
+        String sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+        String senhaHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+
+        try (Connection connection = ConnectionSQL.conectar(); PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        };
+    }
 }

@@ -1,25 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.taskmanager.model;
 
-/**
- *
- * @author HENRIQUEMICHEL
- */
 public class User {
 
     private int id;
     private String name;
     private String email;
-    private String senha;
+    private String password;
 
-    public User(int id, String name, String email, String senha) {
+    public User(int id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.senha = senha;
+        this.password = password;
     }
 
     public int getId() {
@@ -46,11 +38,11 @@ public class User {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String senha) {
+        this.password = senha;
     }
 }

@@ -1,22 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.taskmanager.dao;
 
+import com.mycompany.taskmanager.database.ConnectionSQL;
+import com.mycompany.taskmanager.model.Task;
 import com.mycompany.taskmanager.model.User;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-/**
- *
- * @author HENRIQUEMICHEL
- */
 public class TasksDAO {
 
-    public static void createTask(String title, String description, String expiry, User user) {
-        String sql = "INSERT INTO tasks (titulo,descricao,data_vencimento,userid) VALUES (?,?,?,?)";
+    public static void createTask(Task task, User user) {
+        String sql = "INSERT INTO tasks (titulo, descricao, data_vencimento, userid) VALUES (?, ?, ?, ?)";
 
-        try () {
+        try (Connection connection = ConnectionSQL.conectar(); PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setString(1, task.getTitle());
+            stmt.setString(2, task.getDescription());
+            stmt.setString(3, task.getExpiry());
+            stmt.setInt(4, user.getId());
+
+            stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         };
