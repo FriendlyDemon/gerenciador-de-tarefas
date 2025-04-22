@@ -39,6 +39,7 @@ public class UserDAO {
                 return BCrypt.checkpw(user.getPassword(), passwordHash);
             }
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
         return false;
     }
@@ -53,6 +54,7 @@ public class UserDAO {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -66,6 +68,7 @@ public class UserDAO {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -80,9 +83,11 @@ public class UserDAO {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
     public static void deleteUser(User user) {
+
     }
 }

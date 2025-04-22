@@ -8,7 +8,7 @@ public class CreateTables {
 
     private static final Connection connection = ConnectionSQL.conectar();
 
-    private static void CreateUsersTable() {
+    private static void CreateUserTable() {
         String sql = "CREATE TABLE IF NOT EXISTS user ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "name VARCHAR(255) NOT NULL, "
