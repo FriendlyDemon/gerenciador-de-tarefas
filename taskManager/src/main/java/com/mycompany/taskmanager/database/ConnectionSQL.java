@@ -22,10 +22,10 @@ public class ConnectionSQL {
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(URL, DB_USER, DB_PASSWORD);
 
-                System.out.println("Conectado ao banco.");
+                
             }
         } catch (SQLException error) {
-            throw new RuntimeException("Erro na conexão com o banco de dados", error);
+            JOptionPane.showMessageDialog(null,"error:"+ error.getMessage());
         }
 
         return connection;
