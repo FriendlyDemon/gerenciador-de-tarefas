@@ -1,3 +1,7 @@
-com\mycompany\taskmanager\model\user.class
+com\mycompany\taskmanager\database\CreateTables.class
+com\mycompany\taskmanager\dao\TasksDAO.class
+com\mycompany\taskmanager\model\User.class
+com\mycompany\taskmanager\model\Task.class
 com\mycompany\taskmanager\TaskManager.class
-com\mycompany\taskmanager\model\tasks.class
+com\mycompany\taskmanager\dao\UserDAO.class
+com\mycompany\taskmanager\database\ConnectionSQL.class

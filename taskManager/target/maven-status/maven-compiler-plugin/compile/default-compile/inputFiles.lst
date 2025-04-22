@@ -1,3 +1,7 @@
-C:\Users\HENRIQUEMICHEL\Documents\Henrique\gerenciador-de-tarefas\taskManager\src\main\java\com\mycompany\taskmanager\TaskManager.java
-C:\Users\HENRIQUEMICHEL\Documents\Henrique\gerenciador-de-tarefas\taskManager\src\main\java\com\mycompany\taskmanager\model\tasks.java
-C:\Users\HENRIQUEMICHEL\Documents\Henrique\gerenciador-de-tarefas\taskManager\src\main\java\com\mycompany\taskmanager\model\user.java
+C:\Users\TALITANAIBERTDACOSTA\Documents\gerenciador-de-tarefas\taskManager\src\main\java\com\mycompany\taskmanager\dao\UserDAO.java
+C:\Users\TALITANAIBERTDACOSTA\Documents\gerenciador-de-tarefas\taskManager\src\main\java\com\mycompany\taskmanager\model\Task.java
+C:\Users\TALITANAIBERTDACOSTA\Documents\gerenciador-de-tarefas\taskManager\src\main\java\com\mycompany\taskmanager\TaskManager.java
+C:\Users\TALITANAIBERTDACOSTA\Documents\gerenciador-de-tarefas\taskManager\src\main\java\com\mycompany\taskmanager\dao\TasksDAO.java
+C:\Users\TALITANAIBERTDACOSTA\Documents\gerenciador-de-tarefas\taskManager\src\main\java\com\mycompany\taskmanager\database\ConnectionSQL.java
+C:\Users\TALITANAIBERTDACOSTA\Documents\gerenciador-de-tarefas\taskManager\src\main\java\com\mycompany\taskmanager\database\CreateTables.java
+C:\Users\TALITANAIBERTDACOSTA\Documents\gerenciador-de-tarefas\taskManager\src\main\java\com\mycompany\taskmanager\model\User.java
