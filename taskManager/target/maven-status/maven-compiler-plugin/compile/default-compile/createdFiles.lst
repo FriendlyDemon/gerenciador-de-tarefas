@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 com\mycompany\taskmanager\view\TaskForm.class
 com\mycompany\taskmanager\database\CreateTables.class
 com\mycompany\taskmanager\view\MainView$3.class
@@ -16,3 +17,7 @@ com\mycompany\taskmanager\model\Task.class
 com\mycompany\taskmanager\TaskManager.class
 com\mycompany\taskmanager\database\ConnectionSQL.class
 com\mycompany\taskmanager\view\MainView$2.class
+=======
+com\mycompany\taskmanager\model\User.class
+com\mycompany\taskmanager\TaskManager.class
+>>>>>>> 3f2cb332dbecfcc57d60c3720177b67fd87975cd
