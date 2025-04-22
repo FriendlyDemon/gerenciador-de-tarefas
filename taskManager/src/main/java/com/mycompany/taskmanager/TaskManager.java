@@ -8,5 +8,6 @@ public class TaskManager {
     public static void main(String[] args) {
         User user = new User(0, "usuario", "usuario@email.com", "112233");
         UserDAO.createUser(user);
+
     }
 }

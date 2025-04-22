@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class TasksDAO {
 
     public static void createTask(Task task, User user) {
-        String sql = "INSERT INTO tasks (titulo, descricao, data_vencimento, userid) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO tasks (titulo, description, due_date, user_id) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = ConnectionSQL.conectar(); PreparedStatement stmt = connection.prepareStatement(sql)) {
             
