@@ -14,10 +14,10 @@ public class UserDAO {
         String senhaHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 
         try (Connection connection = ConnectionSQL.conectar(); PreparedStatement stmt = connection.prepareStatement(sql)) {
-            
+
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPassword());
+            stmt.setString(3, senhaHash);
 
             stmt.executeUpdate();
         } catch (SQLException e) {

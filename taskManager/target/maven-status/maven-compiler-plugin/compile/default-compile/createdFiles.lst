@@ -1,3 +1,2 @@
-com\mycompany\taskmanager\model\user.class
+com\mycompany\taskmanager\model\User.class
 com\mycompany\taskmanager\TaskManager.class
-com\mycompany\taskmanager\model\tasks.class
