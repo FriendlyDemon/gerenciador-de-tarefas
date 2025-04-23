@@ -18,24 +18,23 @@ public class CreateTables {
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao criar a tabela user", e);
+            System.out.println(e.getMessage());
         }
     }
 
     private static void CreateTaskTable() {
         String sql = "CREATE TABLE IF NOT EXISTS Task ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
-                + " title VARCHAR(255) NOT NULL,"
-                + "description TEXT,"
-                + "due_date DATE,"
-                + " status ENUM('pending','concluded') DEFAULT 'pending',"
+                + "title VARCHAR(255) NOT NULL, "
+                + "description TEXT, "
+                + "due_date DATE, "
+                + "status ENUM('pending', 'concluded') DEFAULT 'pending', "
                 + "user_id INT, FOREIGN KEY (user_id) REFERENCES users (id)";
-                
 
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao criar a tabela task", e);
+            System.out.println(e.getMessage());
         }
     }
 

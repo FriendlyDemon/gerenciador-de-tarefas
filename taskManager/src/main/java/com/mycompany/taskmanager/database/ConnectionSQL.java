@@ -4,7 +4,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 public class ConnectionSQL {
 
@@ -22,26 +21,22 @@ public class ConnectionSQL {
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(URL, DB_USER, DB_PASSWORD);
 
-                
             }
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null,"error:"+ error.getMessage());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
 
         return connection;
     }
-    
-    
-    
-     public void disconnect(Connection connection){
-        
-   try{
-        if(connection !=null){
-            connection.close();
-        } 
+
+    public void disconnect(Connection connection) {
+
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
-   catch (SQLException error){
-            JOptionPane.showMessageDialog(null,"error:"+ error.getMessage());
-    }
     }
 }

@@ -1,6 +1,7 @@
 package com.mycompany.taskmanager.dao;
 
 import com.mycompany.taskmanager.database.ConnectionSQL;
+import com.mycompany.taskmanager.model.Task;
 import com.mycompany.taskmanager.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,43 +9,128 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import org.mindrot.jbcrypt.BCrypt;
 
-public class UserDAO {
+public class TaskDAO {
 
-    public static User createUser(User user) {
-        String sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-        String passwordHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+    public static boolean createTask(Task task) {
+        String sql = "INSERT INTO tasks (title, description, due_date, status, user_id) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
 
-            stmt.setString(1, user.getName());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, passwordHash);
+            stmt.setString(1, task.getTitle());
+            stmt.setString(2, task.getDescription());
+            stmt.setString(3, task.getDue_date());
+            stmt.setString(4, task.getStatus());
+            stmt.setInt(5, task.getUser_id());
 
             int created = stmt.executeUpdate();
             if (created == 1) {
-                return searchUser(user.getEmail());
+                return true;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return false;
     }
 
-    public static User validadeLogin(String email, String password) {
-        String sql = "SELECT * FROM users WHERE email = ?";
+
+    public static boolean updateTaskTitle(int id, String title) {
+        String sql = "UPDATE tasks SET title = ? WHERE id = ?";
 
         try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
 
-            stmt.setString(1, email);
+            stmt.setString(1, title);
+            stmt.setInt(2, id);
 
+            int update = stmt.executeUpdate();
+            if (update == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public static boolean updateTaskDescription(int id, String description) {
+        String sql = "UPDATE tasks SET description = ? WHERE id = ?";
+
+        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
+
+            stmt.setString(1, description);
+            stmt.setInt(2, id);
+
+            int update = stmt.executeUpdate();
+            if (update == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public static boolean updateTaskDue_date(int id,String due_date) {
+        String sql = "UPDATE tasks SET due_date = ? WHERE id = ?";
+
+        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
+
+            stmt.setString(1, due_date);
+            stmt.setInt(2, id);
+
+            int update = stmt.executeUpdate();
+            if (update == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public static boolean updateTaskStatus(int id,String status) {
+        String sql = "UPDATE tasks SET status = ? WHERE id = ?";
+
+        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
+
+            stmt.setString(1, status);
+            stmt.setInt(2, id);
+
+            int update = stmt.executeUpdate();
+            if (update == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public static boolean updateTaskUser(int id, int user_id) {
+        String sql = "UPDATE tasks SET user_id = ? WHERE id = ?";
+
+        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
+
+            stmt.setInt(1, user_id);
+            stmt.setInt(2, id);
+
+            int update = stmt.executeUpdate();
+            if (update == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public static Task searchTask(String title) {
+        String sql = "SELECT * FROM tasks WHERE title = ?";
+        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
+            stmt.setString(1, title);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                String passwordHash = rs.getString("password");
-                if (BCrypt.checkpw(password, passwordHash)) {
-                    return new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"));
-                }
+                return new Task(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("due_date"), rs.getString("status").equals("concluded"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -52,86 +138,15 @@ public class UserDAO {
         return null;
     }
 
-    public static boolean updateUserName(int id, String name) {
-        String sql = "UPDATE users SET name = ? WHERE id = ?";
-
-        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
-
-            stmt.setString(1, name);
-            stmt.setInt(2, id);
-
-            int update = stmt.executeUpdate();
-            if (update == 1) {
-                return true;
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-    public static boolean updateUserEmail(int id, String email) {
-        String sql = "UPDATE users SET email = ? WHERE id = ?";
-
-        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
-
-            stmt.setString(1, email);
-            stmt.setInt(2, id);
-
-            int update = stmt.executeUpdate();
-            if (update == 1) {
-                return true;
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-    public static boolean updateUserPassword(int id, String password) {
-        String sql = "UPDATE users SET password = ? WHERE id = ?";
-        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-
-        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
-
-            stmt.setString(1, passwordHash);
-            stmt.setInt(2, id);
-
-            int update = stmt.executeUpdate();
-            if (update == 1) {
-                return true;
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-    public static User searchUser(String email) {
-        String sql = "SELECT * FROM users WHERE email = ?";
-        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
-
-            stmt.setString(1, email);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-
-    public static ArrayList<User> listUsers() {
-        String sql = "SELECT id, name, email FROM users";
-        ArrayList<User> aL = new ArrayList();
+    public static ArrayList<Task> listTasks() {
+        String sql = "SELECT * FROM tasks";
+        ArrayList<Task> aL = new ArrayList();
         try (Connection cnn = ConnectionSQL.conectar(); Statement stmt = cnn.createStatement()) {
 
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                aL.add(new User(rs.getInt("id"), rs.getString("name"), rs.getString("email")));
+                aL.add(new Task(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("due_date"), rs.getString("status").equals("concluded")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -139,8 +154,8 @@ public class UserDAO {
         return aL;
     }
 
-    public static boolean deleteUser(int id) {
-        String sql = "DELETE FROM users WHERE id = ?";
+    public static boolean deleteTask(int id) {
+        String sql = "DELETE FROM tasks WHERE id = ?";
 
         try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
 

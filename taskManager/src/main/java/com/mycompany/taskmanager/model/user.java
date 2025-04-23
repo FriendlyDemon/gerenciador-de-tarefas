@@ -7,13 +7,6 @@ public class User {
     private String email;
     private String password;
 
-    public User(int id, String name, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
     public int getId() {
         return id;
     }
@@ -44,5 +37,22 @@ public class User {
 
     public void setPassword(String senha) {
         this.password = senha;
+    }
+
+    public Object[] getTableRow() {
+        return new Object[]{id, name, email};
+    }
+
+    public User(int id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    public User(int id, String name, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 }
