@@ -2,6 +2,7 @@ package com.mycompany.taskmanager.view;
 
 import com.mycompany.taskmanager.controller.TaskController;
 import com.mycompany.taskmanager.model.User;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -116,7 +117,7 @@ public class ListTasks extends javax.swing.JPanel {
         });
 
         searchBTN.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        searchBTN.setText("Search");
+        searchBTN.setText("Search/Update");
         searchBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchBTNActionPerformed(evt);
@@ -150,40 +151,41 @@ public class ListTasks extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(editBTN)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(removeBTN))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(logoffBTN)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(descriptionLabel)
-                            .addComponent(titleLabel)
-                            .addComponent(statusLabel)
-                            .addComponent(duedateLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(titleField)
-                            .addComponent(descriptionField)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(statusBox)
-                                    .addComponent(yearCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(36, 36, 36)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(monthCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                                        .addComponent(dayCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(addBTN)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(searchBTN)))))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(188, 188, 188)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(descriptionLabel)
+                                .addComponent(titleLabel)
+                                .addComponent(statusLabel)
+                                .addComponent(duedateLabel))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(titleField)
+                                .addComponent(descriptionField)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(statusBox)
+                                        .addComponent(yearCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(36, 36, 36)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(monthCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(dayCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(addBTN)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(searchBTN))))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(79, 79, 79)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(editBTN)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(removeBTN))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -231,40 +233,63 @@ public class ListTasks extends javax.swing.JPanel {
     }//GEN-LAST:event_logoffBTNActionPerformed
 
     private void addBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTNActionPerformed
-        String due_date = yearCombo.getSelectedItem() + "/" + monthCombo.getSelectedItem() + "/" + dayCombo.getSelectedItem();
-        TaskController.createTask(titleField.getText(), descriptionField.getText(), due_date, statusBox.isSelected(), user);
-        update();
+        if (!titleField.getText().isBlank()) {
+            String due_date = yearCombo.getSelectedItem() + "/" + monthCombo.getSelectedItem() + "/" + dayCombo.getSelectedItem();
+            TaskController.createTask(titleField.getText(), descriptionField.getText(), due_date, statusBox.isSelected(), user);
+            update();
+        }
     }//GEN-LAST:event_addBTNActionPerformed
 
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
-        TaskController.searchTask(titleField.getText(), model, user);
+        if (!titleField.getText().isBlank()) {
+            TaskController.searchTask(titleField.getText(), model, user);
+        } else {
+            update();
+        }
     }//GEN-LAST:event_searchBTNActionPerformed
 
     private void editBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBTNActionPerformed
         int row = taskTable.getSelectedRow();
-        int id = (int) model.getValueAt(row, 0);
-        String title = titleField.getText();
-        String description = descriptionField.getText();
-        String due_date = yearCombo.getSelectedItem() + "/" + monthCombo.getSelectedItem() + "/" + dayCombo.getSelectedItem();
-        boolean status = statusBox.isSelected();
-        if (!"".equals(title)) {
-            TaskController.updateTaskTitle(id, title);
-        }
-        if (!"".equals(description)) {
-            TaskController.updateTaskDescription(id, description);
-        }
-        if (!"2025/1/1".equals(due_date)) {
-            TaskController.updateTaskDue_date(id, due_date);
-        }
+        if (row != -1) {
+            int id = (int) model.getValueAt(row, 0);
+            boolean changed = false;
+            String title = titleField.getText();
+            String description = descriptionField.getText();
+            String due_date = yearCombo.getSelectedItem() + "/" + monthCombo.getSelectedItem() + "/" + dayCombo.getSelectedItem();
+            boolean status = statusBox.isSelected();
+            if (!title.isBlank()) {
+                TaskController.updateTaskTitle(id, title);
+                changed = true;
+            }
+            if (!description.isBlank()) {
+                TaskController.updateTaskDescription(id, description);
+                changed = true;
+            }
+            if (!"2025/1/1".equals(due_date)) {
+                TaskController.updateTaskDue_date(id, due_date);
+                changed = true;
+            }
 
-        TaskController.updateTaskStatus(id, status);
+            TaskController.updateTaskStatus(id, status);
 
-        update();
+            if (changed) {
+                update();
+            } else {
+                JOptionPane.showMessageDialog(this, "Must have at least one field filled");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Must have a task selected");
+        }
     }//GEN-LAST:event_editBTNActionPerformed
 
     private void removeBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBTNActionPerformed
-        TaskController.deleteTask((int) model.getValueAt(taskTable.getSelectedRow(), 0));
-        update();
+        int row = taskTable.getSelectedRow();
+        if (row != -1) {
+            TaskController.deleteTask((int) model.getValueAt(row, 0));
+            update();
+        } else {
+            JOptionPane.showMessageDialog(this, "Must have a task selected");
+        }
     }//GEN-LAST:event_removeBTNActionPerformed
 
     private void update() {

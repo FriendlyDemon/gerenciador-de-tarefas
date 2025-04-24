@@ -2,6 +2,7 @@ package com.mycompany.taskmanager.view;
 
 import com.mycompany.taskmanager.controller.UserController;
 import com.mycompany.taskmanager.model.User;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class Login extends javax.swing.JPanel {
@@ -116,13 +117,17 @@ public class Login extends javax.swing.JPanel {
 
     private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
         MainFrame father = (MainFrame) SwingUtilities.getWindowAncestor(this);
-        User user = UserController.createUser(nameField.getText(), emailField.getText(), passwordField.getPassword());
-        if (user != null && !"admin".equals(user.getEmail())) {
-            father.setContentPane(new ListTasks(user));
-            father.pack();
-        } else if (user != null) {
-            father.setContentPane(new AdminPage(user));
-            father.pack();
+        if (!nameField.getText().isBlank() && !emailField.getText().isBlank() && passwordField.getPassword().length > 0) {
+            User user = UserController.createUser(nameField.getText(), emailField.getText(), passwordField.getPassword());
+            if (user != null && !"admin".equals(user.getEmail())) {
+                father.setContentPane(new ListTasks(user));
+                father.pack();
+            } else if (user != null) {
+                father.setContentPane(new AdminPage(user));
+                father.pack();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "All fields must be filled");
         }
     }//GEN-LAST:event_RegisterActionPerformed
 

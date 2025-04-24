@@ -40,10 +40,11 @@ public class TaskController {
 
     public static void searchTask(String title, DefaultTableModel model, User user) {
         Task task;
+        String titleLIKE = "%" + title + "%";
         if ("admin".equals(user.getEmail())) {
-            task = TaskDAO.searchTask(title);
+            task = TaskDAO.searchTask(titleLIKE);
         } else {
-            task = TaskDAO.searchTask(title, user.getId());
+            task = TaskDAO.searchTask(titleLIKE, user.getId());
         }
         model.setRowCount(0);
         Object[] row = task.getTableRow();

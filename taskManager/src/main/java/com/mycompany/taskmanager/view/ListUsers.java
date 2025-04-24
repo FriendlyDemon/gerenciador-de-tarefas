@@ -2,6 +2,7 @@ package com.mycompany.taskmanager.view;
 
 import com.mycompany.taskmanager.controller.UserController;
 import com.mycompany.taskmanager.model.User;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -44,6 +45,12 @@ public class ListUsers extends javax.swing.JPanel {
         backBTN = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
+        editBTN = new javax.swing.JButton();
+        nameField = new javax.swing.JTextField();
+        removeBTN = new javax.swing.JButton();
+        emailField = new javax.swing.JTextField();
+        nameLabel = new javax.swing.JLabel();
+        emailLabel = new javax.swing.JLabel();
 
         backBTN.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         backBTN.setText("Back");
@@ -66,6 +73,32 @@ public class ListUsers extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(userTable);
 
+        editBTN.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        editBTN.setText("Edit");
+        editBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBTNActionPerformed(evt);
+            }
+        });
+
+        nameField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        removeBTN.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        removeBTN.setText("Remove");
+        removeBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeBTNActionPerformed(evt);
+            }
+        });
+
+        emailField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        nameLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        nameLabel.setText("Name");
+
+        emailLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        emailLabel.setText("Email");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,16 +108,42 @@ public class ListUsers extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(80, 80, 80)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(emailLabel)
+                            .addComponent(nameLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(emailField)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(editBTN)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                                .addComponent(removeBTN))
+                            .addComponent(nameField))))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(backBTN)
-                .addGap(153, 153, 153)
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameLabel))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(emailLabel))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editBTN)
+                    .addComponent(removeBTN))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 58, Short.MAX_VALUE))
+                .addGap(0, 46, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -94,10 +153,53 @@ public class ListUsers extends javax.swing.JPanel {
         father.pack();
     }//GEN-LAST:event_backBTNActionPerformed
 
+    private void editBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBTNActionPerformed
+        int row = userTable.getSelectedRow();
+        if (row != -1) {
+            int id = (int) model.getValueAt(row, 0);
+
+            boolean changed = false;
+            if (!nameField.getText().isBlank()) {
+                UserController.updateUserName(id, nameField.getText());
+                changed = true;
+            }
+            if (!emailField.getText().isBlank()) {
+                UserController.updateUserEmail(id, emailField.getText());
+                changed = true;
+            }
+            if (changed) {
+                update();
+            } else {
+                JOptionPane.showMessageDialog(this, "Must have at least one field filled");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Must have a task selected");
+        }
+    }//GEN-LAST:event_editBTNActionPerformed
+
+    private void removeBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBTNActionPerformed
+        int row = userTable.getSelectedRow();
+        if (row != -1) {
+            UserController.deleteUser((int) model.getValueAt(row, 0));
+            update();
+        } else {
+            JOptionPane.showMessageDialog(this, "Must have a task selected");
+        }
+    }//GEN-LAST:event_removeBTNActionPerformed
+
+    private void update() {
+        UserController.listUsers(model);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBTN;
+    private javax.swing.JButton editBTN;
+    private javax.swing.JTextField emailField;
+    private javax.swing.JLabel emailLabel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JButton removeBTN;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
 }

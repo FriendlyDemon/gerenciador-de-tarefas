@@ -19,7 +19,7 @@ public class ConnectionSQL {
         try {
 
             if (connection == null || connection.isClosed()) {
-                connection = DriverManager.getConnection(URL, DB_USER, null);
+                connection = DriverManager.getConnection(URL, DB_USER, DB_PASSWORD);
 
             }
         } catch (SQLException e) {

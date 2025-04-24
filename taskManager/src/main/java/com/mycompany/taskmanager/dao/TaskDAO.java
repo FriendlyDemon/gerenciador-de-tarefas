@@ -2,7 +2,6 @@ package com.mycompany.taskmanager.dao;
 
 import com.mycompany.taskmanager.database.ConnectionSQL;
 import com.mycompany.taskmanager.model.Task;
-import com.mycompany.taskmanager.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -124,7 +123,7 @@ public class TaskDAO {
     }
 
     public static Task searchTask(String title) {
-        String sql = "SELECT * From tasks WHERE title = ?";
+        String sql = "SELECT * From tasks WHERE title LIKE ?";
         try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
             stmt.setString(1, title);
             ResultSet rs = stmt.executeQuery();
@@ -138,7 +137,7 @@ public class TaskDAO {
     }
 
     public static Task searchTask(String title, int user_id) {
-        String sql = "SELECT * From tasks WHERE title = ? AND user_id = ?";
+        String sql = "SELECT * From tasks WHERE title LIKE ? AND user_id = ?";
         try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
             stmt.setString(1, title);
             stmt.setInt(2, user_id);

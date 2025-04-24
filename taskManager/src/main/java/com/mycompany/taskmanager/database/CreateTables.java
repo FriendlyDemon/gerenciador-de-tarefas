@@ -11,8 +11,8 @@ public class CreateTables {
     public static void CreateUserTable() {
         String sql = "CREATE TABLE IF NOT EXISTS users ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
-                + "name VARCHAR(255) NOT NULL, "
-                + "email VARCHAR(255) NOT NULL UNIQUE,"
+                + "name VARCHAR(100) NOT NULL, "
+                + "email VARCHAR(100) NOT NULL UNIQUE,"
                 + "password VARCHAR(255) NOT NULL)";
 
         try (Statement stmt = connection.createStatement()) {
@@ -25,11 +25,12 @@ public class CreateTables {
     public static void CreateTaskTable() {
         String sql = "CREATE TABLE IF NOT EXISTS Tasks ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
-                + "title VARCHAR(255) NOT NULL, "
+                + "title VARCHAR(100) NOT NULL, "
                 + "description TEXT, "
                 + "due_date DATE, "
                 + "status ENUM('pending', 'concluded') DEFAULT 'pending', "
-                + "user_id INT, FOREIGN KEY (user_id) REFERENCES users (id))";
+                + "user_id INT, FOREIGN KEY (user_id) REFERENCES users (id) "
+                + "ON DELETE CASCADE ON UPDATE CASCADE)";
 
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(sql);
