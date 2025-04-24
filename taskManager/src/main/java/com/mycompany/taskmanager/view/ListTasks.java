@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.mycompany.taskmanager.view;
 
 import com.mycompany.taskmanager.controller.TaskController;
@@ -9,21 +5,41 @@ import com.mycompany.taskmanager.model.User;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author HENRIQUEMICHEL
- */
 public class ListTasks extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ListTasks
-     */
-    User user;
-    DefaultTableModel model;
+    public User user;
+    public DefaultTableModel model = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+
+    private void startTable() {
+
+        model.addColumn("Id");
+        model.addColumn("Title");
+        model.addColumn("Description");
+        model.addColumn("Due Date");
+        model.addColumn("Status");
+        model.addColumn("User");
+
+        TaskController.listTasks(model, user);
+        taskTable.setModel(model);
+        taskTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        taskTable.removeColumn(taskTable.getColumn("Id"));
+
+        taskTable.getColumn("Title").setPreferredWidth(100);
+        taskTable.getColumn("Description").setPreferredWidth(100);
+    }
 
     public ListTasks(User user) {
         this.user = user;
         initComponents();
+        startTable();
+        if ("admin".equals(user.getEmail())) {
+            logoffBTN.setText("back");
+        }
     }
 
     /**
@@ -35,11 +51,12 @@ public class ListTasks extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        logoffBTN = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        taskTable = new javax.swing.JTable();
+        editBTN = new javax.swing.JButton();
+        removeBTN = new javax.swing.JButton();
         titleField = new javax.swing.JTextField();
         descriptionField = new javax.swing.JTextField();
         statusBox = new javax.swing.JCheckBox();
@@ -48,34 +65,40 @@ public class ListTasks extends javax.swing.JPanel {
         monthCombo = new javax.swing.JComboBox<>();
         dayCombo = new javax.swing.JComboBox<>();
         yearCombo = new javax.swing.JComboBox<>();
+        titleLabel = new javax.swing.JLabel();
+        descriptionLabel = new javax.swing.JLabel();
+        statusLabel = new javax.swing.JLabel();
+        duedateLabel = new javax.swing.JLabel();
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("jLabel1");
+
+        logoffBTN.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        logoffBTN.setText("Logoff");
+        logoffBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                logoffBTNActionPerformed(evt);
             }
         });
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        taskTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        taskTable.setModel(model);
+        jScrollPane1.setViewportView(taskTable);
+
+        editBTN.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        editBTN.setText("Edit");
+        editBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBTNActionPerformed(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setText("jButton2");
-
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton3.setText("jButton3");
+        removeBTN.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        removeBTN.setText("Remove");
+        removeBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeBTNActionPerformed(evt);
+            }
+        });
 
         titleField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -94,6 +117,11 @@ public class ListTasks extends javax.swing.JPanel {
 
         searchBTN.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         searchBTN.setText("Search");
+        searchBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBTNActionPerformed(evt);
+            }
+        });
 
         monthCombo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         monthCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
@@ -103,6 +131,18 @@ public class ListTasks extends javax.swing.JPanel {
 
         yearCombo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         yearCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2025", "2026", "2027", "2028", "2029", "2030" }));
+
+        titleLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        titleLabel.setText("Title");
+
+        descriptionLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        descriptionLabel.setText("Description");
+
+        statusLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        statusLabel.setText("Status");
+
+        duedateLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        duedateLabel.setText("Due Date");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -114,13 +154,19 @@ public class ListTasks extends javax.swing.JPanel {
                         .addGap(79, 79, 79)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2)
+                                .addComponent(editBTN)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3))
+                                .addComponent(removeBTN))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(logoffBTN)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(92, 92, 92)
+                        .addGap(188, 188, 188)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(descriptionLabel)
+                            .addComponent(titleLabel)
+                            .addComponent(statusLabel)
+                            .addComponent(duedateLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(titleField)
                             .addComponent(descriptionField)
@@ -143,57 +189,105 @@ public class ListTasks extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(titleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(logoffBTN)
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(titleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(titleLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(descriptionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(descriptionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(descriptionLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(monthCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dayCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(yearCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(yearCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(duedateLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(statusBox)
                     .addComponent(addBTN)
-                    .addComponent(searchBTN))
-                .addGap(32, 32, 32)
+                    .addComponent(searchBTN)
+                    .addComponent(statusLabel))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(editBTN)
+                    .addComponent(removeBTN))
                 .addGap(0, 17, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void logoffBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoffBTNActionPerformed
         MainFrame father = (MainFrame) SwingUtilities.getWindowAncestor(this);
-        father.setContentPane(new Login());
+        if ("admin".equals(user.getEmail())) {
+            father.setContentPane(new AdminPage(user));
+        } else {
+            father.setContentPane(new Login());
+        }
         father.pack();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_logoffBTNActionPerformed
 
     private void addBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTNActionPerformed
-TaskController.createTask(titleField.getText(), descriptionField.getText(), yearCombo.getSelectedItem()+"/"+monthCombo.getSelectedItem()+"/"+dayCombo.getSelectedItem(), false, user);
+        String due_date = yearCombo.getSelectedItem() + "/" + monthCombo.getSelectedItem() + "/" + dayCombo.getSelectedItem();
+        TaskController.createTask(titleField.getText(), descriptionField.getText(), due_date, statusBox.isSelected(), user);
+        update();
     }//GEN-LAST:event_addBTNActionPerformed
 
+    private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
+        TaskController.searchTask(titleField.getText(), model, user);
+    }//GEN-LAST:event_searchBTNActionPerformed
 
+    private void editBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBTNActionPerformed
+        int row = taskTable.getSelectedRow();
+        int id = (int) model.getValueAt(row, 0);
+        String title = titleField.getText();
+        String description = descriptionField.getText();
+        String due_date = yearCombo.getSelectedItem() + "/" + monthCombo.getSelectedItem() + "/" + dayCombo.getSelectedItem();
+        boolean status = statusBox.isSelected();
+        if (!"".equals(title)) {
+            TaskController.updateTaskTitle(id, title);
+        }
+        if (!"".equals(description)) {
+            TaskController.updateTaskDescription(id, description);
+        }
+        if (!"2025/1/1".equals(due_date)) {
+            TaskController.updateTaskDue_date(id, due_date);
+        }
+
+        TaskController.updateTaskStatus(id, status);
+
+        update();
+    }//GEN-LAST:event_editBTNActionPerformed
+
+    private void removeBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBTNActionPerformed
+        TaskController.deleteTask((int) model.getValueAt(taskTable.getSelectedRow(), 0));
+        update();
+    }//GEN-LAST:event_removeBTNActionPerformed
+
+    private void update() {
+        TaskController.listTasks(model, user);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBTN;
     private javax.swing.JComboBox<String> dayCombo;
     private javax.swing.JTextField descriptionField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel descriptionLabel;
+    private javax.swing.JLabel duedateLabel;
+    private javax.swing.JButton editBTN;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton logoffBTN;
     private javax.swing.JComboBox<String> monthCombo;
+    private javax.swing.JButton removeBTN;
     private javax.swing.JButton searchBTN;
     private javax.swing.JCheckBox statusBox;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JTable taskTable;
     private javax.swing.JTextField titleField;
+    private javax.swing.JLabel titleLabel;
     private javax.swing.JComboBox<String> yearCombo;
     // End of variables declaration//GEN-END:variables
 }

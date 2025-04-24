@@ -123,6 +123,22 @@ public class UserDAO {
         return null;
     }
 
+    public static User searchUser(int id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     public static ArrayList<User> listUsers() {
         String sql = "SELECT id, name, email FROM users";
         ArrayList<User> aL = new ArrayList();

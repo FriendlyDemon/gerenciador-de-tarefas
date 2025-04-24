@@ -1,23 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.mycompany.taskmanager.view;
 
 import com.mycompany.taskmanager.controller.UserController;
-import com.mycompany.taskmanager.dao.UserDAO;
 import com.mycompany.taskmanager.model.User;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author HENRIQUEMICHEL
- */
 public class Login extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Login
-     */
     public Login() {
         initComponents();
     }
@@ -117,8 +105,11 @@ public class Login extends javax.swing.JPanel {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         MainFrame father = (MainFrame) SwingUtilities.getWindowAncestor(this);
         User user = UserController.validateUser(emailField.getText(), passwordField.getPassword());
-        if (user != null) {
+        if (user != null && !"admin".equals(user.getEmail())) {
             father.setContentPane(new ListTasks(user));
+            father.pack();
+        } else if (user != null) {
+            father.setContentPane(new AdminPage(user));
             father.pack();
         }
     }//GEN-LAST:event_loginActionPerformed
@@ -126,10 +117,12 @@ public class Login extends javax.swing.JPanel {
     private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
         MainFrame father = (MainFrame) SwingUtilities.getWindowAncestor(this);
         User user = UserController.createUser(nameField.getText(), emailField.getText(), passwordField.getPassword());
-        if (user != null) {
+        if (user != null && !"admin".equals(user.getEmail())) {
             father.setContentPane(new ListTasks(user));
             father.pack();
-            
+        } else if (user != null) {
+            father.setContentPane(new AdminPage(user));
+            father.pack();
         }
     }//GEN-LAST:event_RegisterActionPerformed
 

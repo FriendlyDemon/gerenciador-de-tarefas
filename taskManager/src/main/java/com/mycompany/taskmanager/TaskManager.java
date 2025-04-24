@@ -1,5 +1,6 @@
 package com.mycompany.taskmanager;
 
+import com.mycompany.taskmanager.database.CreateTables;
 import com.mycompany.taskmanager.view.Login;
 import com.mycompany.taskmanager.view.MainFrame;
 
@@ -12,6 +13,8 @@ public class TaskManager {
         //TaskDAO.createTask(new Task(2, "lavar o chao", "lavar o chao da sala", "2025/04/24", true), user);
         //System.out.println(TaskDAO.searchTask("lavar o chao").getStatus());
         //System.out.println(TaskDAO.searchTask("lavar a louça").getStatus());
+//        CreateTables.CreateTaskTable();
+//        CreateTables.CreateUserTable();
         new MainFrame(new Login()).setVisible(true);
     }
 }

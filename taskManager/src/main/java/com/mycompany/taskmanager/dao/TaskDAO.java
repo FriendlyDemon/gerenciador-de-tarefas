@@ -33,7 +33,6 @@ public class TaskDAO {
         return false;
     }
 
-
     public static boolean updateTaskTitle(int id, String title) {
         String sql = "UPDATE tasks SET title = ? WHERE id = ?";
 
@@ -70,7 +69,7 @@ public class TaskDAO {
         return false;
     }
 
-    public static boolean updateTaskDue_date(int id,String due_date) {
+    public static boolean updateTaskDue_date(int id, String due_date) {
         String sql = "UPDATE tasks SET due_date = ? WHERE id = ?";
 
         try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
@@ -88,7 +87,7 @@ public class TaskDAO {
         return false;
     }
 
-    public static boolean updateTaskStatus(int id,String status) {
+    public static boolean updateTaskStatus(int id, String status) {
         String sql = "UPDATE tasks SET status = ? WHERE id = ?";
 
         try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
@@ -125,12 +124,27 @@ public class TaskDAO {
     }
 
     public static Task searchTask(String title) {
-        String sql = "SELECT * FROM tasks WHERE title = ?";
+        String sql = "SELECT * From tasks WHERE title = ?";
         try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
             stmt.setString(1, title);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Task(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("due_date"), rs.getString("status").equals("concluded"));
+                return new Task(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("due_date"), rs.getString("status").equals("concluded"), rs.getInt("user_id"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public static Task searchTask(String title, int user_id) {
+        String sql = "SELECT * From tasks WHERE title = ? AND user_id = ?";
+        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
+            stmt.setString(1, title);
+            stmt.setInt(2, user_id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Task(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("due_date"), rs.getString("status").equals("concluded"), rs.getInt("user_id"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -139,14 +153,30 @@ public class TaskDAO {
     }
 
     public static ArrayList<Task> listTasks() {
-        String sql = "SELECT * FROM tasks";
+        String sql = "SELECT * From tasks";
         ArrayList<Task> aL = new ArrayList();
         try (Connection cnn = ConnectionSQL.conectar(); Statement stmt = cnn.createStatement()) {
 
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                aL.add(new Task(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("due_date"), rs.getString("status").equals("concluded")));
+                aL.add(new Task(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("due_date"), rs.getString("status").equals("concluded"), rs.getInt("user_id")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return aL;
+    }
+
+    public static ArrayList<Task> listTasks(int user_id) {
+        String sql = "SELECT * From tasks WHERE user_id = ?";
+        ArrayList<Task> aL = new ArrayList();
+        try (Connection cnn = ConnectionSQL.conectar(); PreparedStatement stmt = cnn.prepareStatement(sql)) {
+            stmt.setInt(1, user_id);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                aL.add(new Task(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("due_date"), rs.getString("status").equals("concluded"), rs.getInt("user_id")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

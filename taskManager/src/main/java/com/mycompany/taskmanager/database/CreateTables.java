@@ -8,8 +8,8 @@ public class CreateTables {
 
     private static final Connection connection = ConnectionSQL.conectar();
 
-    private static void CreateUserTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS user ("
+    public static void CreateUserTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS users ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "name VARCHAR(255) NOT NULL, "
                 + "email VARCHAR(255) NOT NULL UNIQUE,"
@@ -22,14 +22,14 @@ public class CreateTables {
         }
     }
 
-    private static void CreateTaskTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS Task ("
+    public static void CreateTaskTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS Tasks ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "title VARCHAR(255) NOT NULL, "
                 + "description TEXT, "
                 + "due_date DATE, "
                 + "status ENUM('pending', 'concluded') DEFAULT 'pending', "
-                + "user_id INT, FOREIGN KEY (user_id) REFERENCES users (id)";
+                + "user_id INT, FOREIGN KEY (user_id) REFERENCES users (id))";
 
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(sql);

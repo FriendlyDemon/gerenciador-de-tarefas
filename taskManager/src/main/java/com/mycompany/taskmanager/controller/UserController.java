@@ -33,8 +33,11 @@ public class UserController {
 
     public static void listUsers(DefaultTableModel model) {
         ArrayList<User> aL = UserDAO.listUsers();
-        for (User user : aL) {
-            model.addRow(user.getTableRow());
+        if (!aL.isEmpty()) {
+            model.setRowCount(0);
+            for (User user : aL) {
+                model.addRow(user.getTableRow());
+            }
         }
     }
 

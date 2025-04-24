@@ -1,6 +1,7 @@
 package com.mycompany.taskmanager.controller;
 
 import com.mycompany.taskmanager.dao.TaskDAO;
+import com.mycompany.taskmanager.dao.UserDAO;
 import com.mycompany.taskmanager.model.Task;
 import com.mycompany.taskmanager.model.User;
 import java.util.ArrayList;
@@ -37,20 +38,44 @@ public class TaskController {
         return TaskDAO.updateTaskUser(id, user_id);
     }
 
-    public static Task searchTask(String title) {
-        return TaskDAO.searchTask(title);
-    }
-
-    public static void searchTask(String title, DefaultTableModel model) {
-        Task task = TaskDAO.searchTask(title);
+    public static void searchTask(String title, DefaultTableModel model, User user) {
+        Task task;
+        if ("admin".equals(user.getEmail())) {
+            task = TaskDAO.searchTask(title);
+        } else {
+            task = TaskDAO.searchTask(title, user.getId());
+        }
         model.setRowCount(0);
-        model.addRow(task.getTableRow());
+        Object[] row = task.getTableRow();
+        User userName = UserDAO.searchUser(task.getUser_id());
+        if (userName != null) {
+            row[5] = userName.getName();
+        } else {
+            row[5] = null;
+        }
+        model.addRow(row);
     }
 
-    public static void listTasks(DefaultTableModel model) {
-        ArrayList<Task> aL = TaskDAO.listTasks();
-        for (Task task : aL) {
-            model.addRow(task.getTableRow());
+    public static void listTasks(DefaultTableModel model, User user_) {
+        ArrayList<Task> aL;
+        if ("admin".equals(user_.getEmail())) {
+            aL = TaskDAO.listTasks();
+        } else {
+            aL = TaskDAO.listTasks(user_.getId());
+        }
+
+        if (!aL.isEmpty()) {
+            model.setRowCount(0);
+            for (Task task : aL) {
+                Object[] row = task.getTableRow();
+                User user = UserDAO.searchUser(task.getUser_id());
+                if (user != null) {
+                    row[5] = user.getName();
+                } else {
+                    row[5] = null;
+                }
+                model.addRow(row);
+            }
         }
     }
 
