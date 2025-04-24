@@ -33,7 +33,7 @@ public class Login extends javax.swing.JPanel {
         emailLabel.setText("Email");
 
         passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        passwordLabel.setText("Passwrod");
+        passwordLabel.setText("Password");
 
         emailField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
